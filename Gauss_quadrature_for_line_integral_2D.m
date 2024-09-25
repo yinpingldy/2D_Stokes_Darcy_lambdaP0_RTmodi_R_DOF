@@ -43,7 +43,7 @@ elseif end_point_1(1)==end_point_2(1) % The line is vertical.
          result = result + Gauss_weights_local_1D(i) * ( feval(coefficient_function_1, end_point_1(1), Gauss_nodes_local_1D(i)) * normal_vector(1) + feval(coefficient_function_2, end_point_1(1), Gauss_nodes_local_1D(i)) * normal_vector(2));
     end
     
-else % The slope of the edge is in (0,infinity).[Î´ÅªÇå]
+else % The slope of the edge is in (0,infinity).
 
     lower_bound = min(end_point_1(1),end_point_2(1));
     upper_bound = max(end_point_1(1),end_point_2(1));
@@ -53,9 +53,8 @@ else % The slope of the edge is in (0,infinity).[Î´ÅªÇå]
     for i=1:Gpn
          x = Gauss_nodes_local_1D(i);
          y = slope*(x-end_point_1(1))+end_point_1(2);
-         result = result + Gauss_weights_local_1D(i) * Jacobi * feval(coefficient_function_1, x, y) ...
-             * dot(triangular_RT0_local_basis(x, y, trial_vertices, trial_basis_index, trial_derivative_degree) , normal_vector) ...
-             * dot(triangular_RT0_local_basis(x, y, test_vertices, test_basis_index, test_derivative_degree) , normal_vector);
+         result = result + Gauss_weights_local_1D(i) * Jacobi ...
+             * (feval(coefficient_function_1, x, y) * normal_vector(1) + feval(coefficient_function_2, x, y) * normal_vector(2));
     end
 
 end
